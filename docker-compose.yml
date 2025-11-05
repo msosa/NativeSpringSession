@@ -1,0 +1,10 @@
+services:
+  nss:
+    container_name: nss
+    image: native-spring-session:0.0.1-SNAPSHOT
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_REDIS_HOST: host.docker.internal
+      SPRING_PROFILES_ACTIVE: "credentials"
+    restart: no

@@ -1,0 +1,17 @@
+. Update link:src/main/resources/application-credentials.yml[application-credentials.yml] with your google client id/secret
+. Run `gradlew bootBuildImage`
+. A `docker-compose.yml` was created for simplicity, but you can just run the created image with the proper variables
+. Go to localhost:8080 where it will ask you to login via google, once you do you will see the error
+
+[source]
+----
+Caused by: com.oracle.svm.core.jdk.UnsupportedFeatureError: SerializationConstructorAccessor class not found for declaringClass: org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest (targetConstructorClass: java.lang.Object). Usually adding org.springframework.security.oauth2.core.endpoint.OAuth2AuthorizationRequest to serialization-config.json fixes the problem
+----
+
+
+Note: I also tried with `GenericJackson2JsonRedisSerializer`, you can uncomment the code in link:src/main/kotlin/com/sosastudios/nativespringsession/config/SessionConfig.kt[SessionConfig.kt] to see the different error there. This error is, make sure to clear the redis keys
+
+[source]
+----
+org.springframework.data.redis.serializer.SerializationException: Could not read JSON:Class org.springframework.security.oauth2.client.jackson2.OAuth2AuthorizationRequestDeserializer has no default (no arg) constructor
+----
