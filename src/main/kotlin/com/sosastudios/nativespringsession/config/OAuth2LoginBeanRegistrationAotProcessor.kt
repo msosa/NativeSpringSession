@@ -31,12 +31,11 @@ import org.springframework.security.oauth2.core.user.DefaultOAuth2User
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority
 import org.springframework.security.web.authentication.WebAuthenticationDetails
 import org.springframework.security.web.jackson2.WebJackson2Module
-import org.springframework.security.web.jackson2.WebServletJackson2Module
 import org.springframework.security.web.savedrequest.DefaultSavedRequest
 import org.springframework.security.web.savedrequest.SavedCookie
-import org.springframework.security.web.csrf.DefaultCsrfToken
+import org.springframework.security.web.server.csrf.DefaultCsrfToken
 import org.springframework.security.web.server.csrf.WebSessionServerCsrfTokenRepository
-import org.springframework.security.web.server.csrf.DefaultCsrfToken as ServerDefaultCsrfToken
+import org.springframework.security.web.server.jackson2.WebServerJackson2Module
 import org.springframework.util.ClassUtils
 import java.util.*
 
@@ -96,7 +95,6 @@ class OAuth2LoginBeanRegistrationAotProcessor : BeanRegistrationAotProcessor {
 						TypeReference.of("jakarta.servlet.http.Cookie"),
 						TypeReference.of(SavedCookie::class.java),
 						TypeReference.of(DefaultCsrfToken::class.java),
-						TypeReference.of(ServerDefaultCsrfToken::class.java),
 						TypeReference.of(WebSessionServerCsrfTokenRepository::class.java),
 						TypeReference.of(AuthorizationGrantType::class.java),
 						TypeReference.of(OAuth2AuthorizationResponseType::class.java),
@@ -115,7 +113,7 @@ class OAuth2LoginBeanRegistrationAotProcessor : BeanRegistrationAotProcessor {
 					listOf(
 						TypeReference.of(CoreJackson2Module::class.java),
 						TypeReference.of(WebJackson2Module::class.java),
-						TypeReference.of(WebServletJackson2Module::class.java),
+						TypeReference.of(WebServerJackson2Module::class.java),
 						TypeReference.of(OAuth2ClientJackson2Module::class.java)
 					)
 				) { builder: TypeHint.Builder ->
@@ -203,7 +201,7 @@ class OAuth2LoginBeanRegistrationAotProcessor : BeanRegistrationAotProcessor {
 			)
 			this.reflectionHintsRegistrar.registerReflectionHints(
 				hints.reflection(),
-				loadClass("org.springframework.security.web.jackson2.DefaultCsrfTokenMixin")
+				loadClass("org.springframework.security.web.server.jackson2.DefaultCsrfServerTokenMixin")
 			)
 		}
 
