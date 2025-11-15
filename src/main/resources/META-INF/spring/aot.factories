@@ -1,0 +1,2 @@
+org.springframework.beans.factory.aot.BeanRegistrationAotProcessor=\
+ com.sosastudios.nativespringsession.config.OAuth2LoginBeanRegistrationAotProcessor
